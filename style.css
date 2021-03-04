@@ -65,7 +65,7 @@ body {
 
 /* Images Container */
 .images-container {
-
+  width: 800px;
   margin-top: 50px;
 }
 
@@ -75,6 +75,12 @@ body {
   border-radius: 5px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
+}
+
+.card-img-top {
+  width: 100%;
+  height: auto;
+  border-radius: 5px 5px 0 0;
 }
 
 .card:hover {
@@ -91,7 +97,6 @@ body {
   margin: 10px auto;
   font-size: 24px;
 }
-
 
 
 /* Save Confirmation */
@@ -117,12 +122,21 @@ body {
   body {
     line-height: 1.4rem;
     font-size: 0.9rem;
+    text-align: justify;
 
+  }
+
+  .images-container {
+    width: 100%;
   }
 
 
   .card-title {
     font-size: 20px;
+  }
+
+  .save-confirmed {
+    right: 25px;
   }
 
 
