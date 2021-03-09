@@ -1,3 +1,4 @@
+//Selects HTML elements
 const resultsNav = document.getElementById('resultsNav');
 const favoritesNav = document.getElementById('favoritesNav');
 const imagesContainer = document.querySelector('.images-container');
@@ -13,8 +14,8 @@ let resultsArray =[];
 //Local Storage
 let favorites = {};
 
-//generates card
-function updateDOM() {
+//Creates card
+function createDOMNodes() {
   resultsArray.forEach((result) => {
     const card = document.createElement('div');
     card.classList.add('card')
@@ -53,13 +54,23 @@ function updateDOM() {
   });
 }
 
+//Updates the DOM
+function updateDOM() {
+  //Gets Favorites from localStorage
+  if (localStorage.getItem('nasaFavorites')) {
+    favorites = JSON.parse(localStorage.getItem('nasaFavorites'))
+    console.log('Favorites from LS', favorites);
+  }
+  createDOMNodes()
+}
+
 // Get Images from NASA API
 
 async function getNasaPictures() {
   try {
     const response = await fetch(apiURL);
     resultsArray = await response.json();
-    console.log(resultsArray)
+
     updateDOM();
   } catch (error) {
     //Catch error here
