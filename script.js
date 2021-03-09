@@ -18,7 +18,8 @@ let favorites = {};
 function createDOMNodes(page) {
   const currentArray = page === 'results' ? resultsArray : Object.values(favorites);
   console.log('Current Array', page, currentArray)
-  currentArray.forEach((result) => {
+  //Switch to currentArray for Favorites
+  resultsArray.forEach((result) => {
     const card = document.createElement('div');
     card.classList.add('card')
     const link = document.createElement('a');
