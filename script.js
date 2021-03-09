@@ -15,8 +15,10 @@ let resultsArray =[];
 let favorites = {};
 
 //Creates card
-function createDOMNodes() {
-  resultsArray.forEach((result) => {
+function createDOMNodes(page) {
+  const currentArray = page === 'results' ? resultsArray : Object.values(favorites);
+  console.log('Current Array', page, currentArray)
+  currentArray.forEach((result) => {
     const card = document.createElement('div');
     card.classList.add('card')
     const link = document.createElement('a');
@@ -55,13 +57,13 @@ function createDOMNodes() {
 }
 
 //Updates the DOM
-function updateDOM() {
+function updateDOM(page) {
   //Gets Favorites from localStorage
   if (localStorage.getItem('nasaFavorites')) {
     favorites = JSON.parse(localStorage.getItem('nasaFavorites'))
     console.log('Favorites from LS', favorites);
   }
-  createDOMNodes()
+  createDOMNodes(page)
 }
 
 // Get Images from NASA API
@@ -71,7 +73,7 @@ async function getNasaPictures() {
     const response = await fetch(apiURL);
     resultsArray = await response.json();
 
-    updateDOM();
+    updateDOM('favorites');
   } catch (error) {
     //Catch error here
   }
