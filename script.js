@@ -6,7 +6,7 @@ const saveConfirmed = document.querySelector('.save-confirmed');
 const loader = document.querySelector('.loader');
 
 //NASA API
-const count = 10;
+const count = 5;
 const apiKey = 'Qx2dxWtEzDNgGAZ0MQdXyZZwjkBMctbDhzt6ACNd'
 const apiURL = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&count=${count}`;
 
@@ -14,11 +14,15 @@ let resultsArray =[];
 //Local Storage
 let favorites = {};
 
+function showContent() {
+  window.scrollTo({ top: 0, behavior: 'instant'});
+  loader.classList.add('hidden');
+}
+
 //Creates card
 function createDOMNodes(page) {
   const currentArray = page === 'results' ? resultsArray : Object.values(favorites);
-  console.log('Current Array', page, currentArray)
-  //Switch to currentArray for Favorites
+
   currentArray.forEach((result) => {
     const card = document.createElement('div');
     card.classList.add('card')
@@ -67,20 +71,24 @@ function updateDOM(page) {
   //Gets Favorites from localStorage
   if (localStorage.getItem('nasaFavorites')) {
     favorites = JSON.parse(localStorage.getItem('nasaFavorites'))
-    console.log('Favorites from LS', favorites);
+
   }
+  //Removes elements appended to container
   imagesContainer.textContent = '';
   createDOMNodes(page)
+  showContent()
 }
 
 // Get Images from NASA API
 
 async function getNasaPictures() {
+  //Show Loader
+  loader.classList.remove('hidden');
   try {
     const response = await fetch(apiURL);
     resultsArray = await response.json();
 
-    updateDOM('favorites');
+    updateDOM('results');
   } catch (error) {
     //Catch error here
   }
