@@ -6,7 +6,7 @@ const saveConfirmed = document.querySelector('.save-confirmed');
 const loader = document.querySelector('.loader');
 
 //NASA API
-const count = 5;
+const count = 6;
 const apiKey = 'Qx2dxWtEzDNgGAZ0MQdXyZZwjkBMctbDhzt6ACNd'
 const apiURL = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&count=${count}`;
 
@@ -14,9 +14,16 @@ let resultsArray =[];
 //Local Storage
 let favorites = {};
 
-function showContent() {
-  window.scrollTo({ top: 0, behavior: 'instant'});
+function showContent(page) {
+  window.scrollTo({ top: 0, behavior: 'instant' });
   loader.classList.add('hidden');
+  if (page === 'favorites') {
+    resultsNav.classList.remove('hidden');
+    favoritesNav.classList.add('hidden');
+  } else {
+    resultsNav.classList.add('hidden');
+    favoritesNav.classList.remove('hidden');
+  }
 }
 
 //Creates card
