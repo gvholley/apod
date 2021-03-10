@@ -19,7 +19,7 @@ function createDOMNodes(page) {
   const currentArray = page === 'results' ? resultsArray : Object.values(favorites);
   console.log('Current Array', page, currentArray)
   //Switch to currentArray for Favorites
-  resultsArray.forEach((result) => {
+  currentArray.forEach((result) => {
     const card = document.createElement('div');
     card.classList.add('card')
     const link = document.createElement('a');
@@ -38,8 +38,13 @@ function createDOMNodes(page) {
     cardTitle.textContent = result.title;
     const saveText = document.createElement('p');
     saveText.classList.add('clickable');
-    saveText.textContent = 'Add to Favorites';
-    saveText.setAttribute('onclick', `saveFavorite('${result.url}')`);
+    if (page === 'results') {
+      saveText.textContent = 'Add to Favorites';
+      saveText.setAttribute('onclick', `saveFavorite('${result.url}')`);
+  } else {
+      saveText.textContent = 'Remove from Favorites';
+      saveText.setAttribute('onclick', `removeFavorite('${result.url}')`);
+  }
     const cardText = document.createElement('p');
     cardText.textContent = result.explanation;
     const footer = document.createElement('small');
@@ -94,6 +99,16 @@ function saveFavorite(itemUrl) {
       localStorage.setItem('nasaFavorites', JSON.stringify(favorites));
     }
   });
+}
+
+//Remove from favorites
+
+function removeFavorite(itemUrl) {
+  if favorites([itemUrl]) {
+    delete favorites[itemUrl];
+    localStorage.setItem('nasaFavorites', JSON.stringify(favorites));
+    updateDOM('favorites')
+  }
 }
 
 //On Load
